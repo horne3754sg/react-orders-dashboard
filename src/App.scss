@@ -1,0 +1,11 @@
+@import './sass/mixins.scss';
+
+.App {
+  background: #272727;
+  min-height: 100vh;
+}
+
+.grid-container {
+}
+
+@include generate-grid-cols(900, 12);
