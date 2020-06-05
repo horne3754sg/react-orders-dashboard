@@ -1,2 +1,14 @@
+$status-ready: #5abba3;
+$status-onway: #5aabe0;
+$status-inqueue: #eb5c47;
+$status-nostock: #e5222d;
+
 .orders-dashboard {
+  .order-item {
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+  }
 }
