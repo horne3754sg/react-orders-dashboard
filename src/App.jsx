@@ -1,12 +1,14 @@
 import React from 'react'
-import ordersDashboard from './components/ordersDashboard'
+import OrdersDashboard from './components/OrdersDashboard'
 
 import './App.scss'
 
 function App() {
   return (
     <div className='App'>
-      <ordersDashboard />
+      <div className='container'>
+        <OrdersDashboard />
+      </div>
     </div>
   )
 }

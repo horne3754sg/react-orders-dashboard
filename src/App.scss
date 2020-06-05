@@ -2,10 +2,20 @@
 
 .App {
   background: #272727;
+  color: #fff;
   min-height: 100vh;
-}
 
-.grid-container {
+  .container {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .flex-grid {
+    display: flex;
+  }
 }
 
 @include generate-grid-cols(900, 12);

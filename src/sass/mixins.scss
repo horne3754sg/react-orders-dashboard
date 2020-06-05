@@ -1,7 +1,7 @@
 @mixin generate-grid-cols($size, $grid-columns) {
   @for $i from 1 through $grid-columns {
     .col-#{$size}-#{$i}-#{$grid-columns} {
-      width: percentage($i / $grid-columns);
+      flex: percentage($i / $grid-columns);
     }
   }
 }
