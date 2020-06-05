@@ -5,8 +5,9 @@ import './OrdersDashboard.scss'
 const orderItems = [...Array(5).keys()].map((_id) => {
   return {
     _id,
-    thumbnail: 'https://picsum.photos/60/60.jpg',
-    name: `Item name ${_id + 1}`,
+    thumbnail: 'https://picsum.photos/70/70.jpg',
+    brand: 'Nike Air',
+    model: `VaporMax 201${_id + 1}`,
     category: 'Men',
     size: 'UK 9',
     colour: 'Blue',
@@ -24,14 +25,28 @@ class OrdersDashboard extends Component {
           {orderItems.map((order) => (
             <div
               className={`order-item flex-grid status-${order.status.toLowerCase()}`}>
-              <div className='col-900-1-12'>
+              <div className='col-900-1-10 thumbnail'>
                 <img src={order.thumbnail} alt='' />
               </div>
-              <div className='col-900-1-12'>{order.name}</div>
-              <div className='col-900-1-12'>{order.category}</div>
-              <div className='col-900-1-12'>{order.size}</div>
-              <div className='col-900-1-12'>{order.colour}</div>
-              <div className='col-900-1-12'>{order.customers_initials}</div>
+              <div className='col-900-3-10 product-name'>
+                <span className='product-brand'>{order.brand}</span>
+                <span className='product-model'>{order.model}</span>
+              </div>
+              <div className='col-900-2-10 product-category'>
+                <span className='cell-label'>Category:</span>{' '}
+                <strong>{order.category}</strong>
+              </div>
+              <div className='col-900-2-10 product-size'>
+                <span className='cell-label'>Size:</span>
+                <strong>{order.size}</strong>
+              </div>
+              <div className='col-900-2-10 product-colour'>
+                <span className='cell-label'>Colour:</span>
+                <strong>{order.colour}</strong>
+              </div>
+              <div className='customer-initials'>
+                <span>{order.customers_initials}</span>
+              </div>
             </div>
           ))}
         </div>
