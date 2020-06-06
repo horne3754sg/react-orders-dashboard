@@ -1,0 +1,49 @@
+$bullet-size: 5px;
+
+.pagination-dots {
+  display: flex;
+  flex: 1 0 100%;
+  align-items: center;
+  justify-content: center;
+
+  > span {
+    display: block;
+    width: $bullet-size;
+    height: $bullet-size;
+    margin: 0 4px;
+    background: #fff;
+    border-radius: $bullet-size;
+  }
+}
+
+.pagination-container {
+  display: flex;
+  position: relative;
+  height: 25px;
+
+  .pagination-pages {
+    display: flex;
+    align-items: stretch;
+    margin-left: auto;
+    position: absolute;
+    right: 0;
+
+    .divider {
+      display: block;
+      width: 1px;
+      height: 25px;
+      margin: 0 5px;
+      background: #888;
+    }
+
+    .current-page {
+      font-weight: 600;
+      align-self: center;
+    }
+
+    .total-pages {
+      font-size: 11px;
+      align-self: center;
+    }
+  }
+}

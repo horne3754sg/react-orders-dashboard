@@ -54,7 +54,7 @@ class OrderDashboard extends Component {
     if (filterBy !== null)
       filtered = allOrders.filter((order) => order.status === filterBy)
 
-    // if you need to order the result, do it here
+    // Note: if you need to order the result, do it here
 
     // finally we will paginate the data here
     const orders = paginate(filtered, currentPage, pageSize)
@@ -63,7 +63,8 @@ class OrderDashboard extends Component {
   }
 
   render() {
-    const { data: orders } = this.getPagedData()
+    const { currentPage, pageSize } = this.state
+    const { totalCount, data: orders } = this.getPagedData()
 
     return (
       <div className='orders-dashboard'>
@@ -76,9 +77,12 @@ class OrderDashboard extends Component {
         <div className='results-container'>
           <OrderResults orders={orders} />
         </div>
-        <div className='pagination-container'>
-          <Pagination />
-        </div>
+
+        <Pagination
+          itemsCount={totalCount}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        />
       </div>
     )
   }
