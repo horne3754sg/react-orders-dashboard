@@ -4,7 +4,7 @@ import OrderResults from './OrderResults'
 
 import './OrdersDashboard.scss'
 
-const orderItems = [...Array(5).keys()].map((_id) => {
+const orderItems = [...Array(20).keys()].map((_id) => {
   return {
     _id,
     thumbnail: '/images/nike-blaze.png',
@@ -13,7 +13,9 @@ const orderItems = [...Array(5).keys()].map((_id) => {
     category: 'Men',
     size: 'UK 9',
     colour: 'Blue',
-    status: 'READY',
+    status: ['READY', 'ONWAY', 'INQUEUE', 'NOSTOCK'][
+      Math.floor(Math.random() * 4) // random status
+    ],
     customers_initials: 'JD',
   }
 })
@@ -24,10 +26,6 @@ class OrderDashboard extends Component {
     filterBy: null,
   }
 
-  componentDidMount() {
-    this.setState({ orders: orderItems })
-  }
-
   filters = [
     { status: 'READY', label: 'Ready to try' },
     { status: 'ONWAY', label: 'On the way' },
@@ -35,12 +33,27 @@ class OrderDashboard extends Component {
     { status: 'NOSTOCK', label: 'Out of stock' },
   ]
 
+  componentDidMount() {
+    this.setState({ orders: orderItems })
+  }
+
   onFilterSelect = (filterBy) => {
-    console.log(filterBy)
     this.setState({ filterBy })
   }
 
+  getPagedData = () => {
+    const { orders: allOrders, filterBy } = this.state
+
+    let orders = allOrders
+    if (filterBy !== null)
+      orders = allOrders.filter((order) => order.status === filterBy)
+
+    return { data: orders }
+  }
+
   render() {
+    const { data: orders } = this.getPagedData()
+
     return (
       <div className='orders-dashboard'>
         <div className='filters-container'>
@@ -50,7 +63,7 @@ class OrderDashboard extends Component {
           />
         </div>
         <div className='results-container'>
-          <OrderResults orders={this.state.orders} />
+          <OrderResults orders={orders} />
         </div>
         <div className='pagination-container'></div>
       </div>

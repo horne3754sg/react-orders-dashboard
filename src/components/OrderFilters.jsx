@@ -3,7 +3,6 @@ import React from 'react'
 import './OrderFilters.scss'
 
 const OrderFilters = ({ filters, onFilterSelect }) => {
-  console.log(filters)
   return (
     <ul className='order-filters'>
       {filters.map((filter) => {
