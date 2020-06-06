@@ -1,0 +1,43 @@
+@import '../sass/_globals.scss';
+
+$bullet-size: 15px;
+
+.order-filters {
+  display: flex;
+  list-style: none;
+  justify-content: right;
+  margin-bottom: 30px;
+  font-size: 11px;
+  text-transform: uppercase;
+
+  li {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      width: $bullet-size;
+      height: $bullet-size;
+      margin-right: 5px;
+      border: 1px solid #fff;
+      border-radius: $bullet-size;
+    }
+
+    @each $key, $value in $statuses {
+      &.filter-#{$key} {
+        &:before {
+          background: $value;
+        }
+      }
+    }
+  }
+}

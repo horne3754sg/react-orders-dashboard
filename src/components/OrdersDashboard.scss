@@ -1,14 +1,4 @@
-$status-ready: #5abba3;
-$status-onway: #5aabe0;
-$status-inqueue: #eb5c47;
-$status-nostock: #e5222d;
-
-$statuses: (
-  'ready': $status-ready,
-  'onway': $status-onway,
-  'inqueue': $status-inqueue,
-  'nostock': $status-nostock,
-);
+@import '../sass/_globals.scss';
 
 .orders-dashboard {
   .order-item {
