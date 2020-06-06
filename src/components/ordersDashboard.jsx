@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import OrderFilters from './OrderFilters'
 import OrderResults from './OrderResults'
+import Pagination from './common/Pagination'
+import { paginate } from '../utils/paginate'
 
 import './OrdersDashboard.scss'
 
@@ -24,6 +26,8 @@ class OrderDashboard extends Component {
   state = {
     orders: [],
     filterBy: null,
+    pageSize: 4,
+    currentPage: 1,
   }
 
   filters = [
@@ -42,13 +46,20 @@ class OrderDashboard extends Component {
   }
 
   getPagedData = () => {
-    const { orders: allOrders, filterBy } = this.state
+    const { orders: allOrders, filterBy, currentPage, pageSize } = this.state
 
-    let orders = allOrders
+    let filtered = allOrders
+
+    // any filtering that needs to be done should be done here first
     if (filterBy !== null)
-      orders = allOrders.filter((order) => order.status === filterBy)
+      filtered = allOrders.filter((order) => order.status === filterBy)
 
-    return { data: orders }
+    // if you need to order the result, do it here
+
+    // finally we will paginate the data here
+    const orders = paginate(filtered, currentPage, pageSize)
+
+    return { totalCount: filtered.length, data: orders }
   }
 
   render() {
@@ -65,7 +76,9 @@ class OrderDashboard extends Component {
         <div className='results-container'>
           <OrderResults orders={orders} />
         </div>
-        <div className='pagination-container'></div>
+        <div className='pagination-container'>
+          <Pagination />
+        </div>
       </div>
     )
   }
