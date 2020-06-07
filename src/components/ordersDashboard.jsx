@@ -7,12 +7,13 @@ import { getOrders } from '../services/orderService'
 
 import './OrdersDashboard.scss'
 
+/*
 const orderItems = [...Array(20).keys()].map((_id) => {
   return {
     _id,
-    thumbnail: '/images/nike-blaze.png',
     brand: 'Nike Air',
     model: `VaporMax 201${_id + 1}`,
+    thumbnail: '/images/nike-blaze.png',
     category: 'Men',
     size: 'UK 9',
     colour: 'Blue',
@@ -22,6 +23,7 @@ const orderItems = [...Array(20).keys()].map((_id) => {
     customers_initials: 'JD',
   }
 })
+*/
 
 class OrderDashboard extends Component {
   state = {
