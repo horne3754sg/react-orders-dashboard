@@ -4,6 +4,7 @@ import OrderResults from './OrderResults'
 import Pagination from './common/Pagination'
 import { paginate } from '../utils/paginate'
 import { getOrders } from '../services/orderService'
+import { mapDataToProps } from '../utils/utils'
 
 import './OrdersDashboard.scss'
 
@@ -11,6 +12,7 @@ class OrderDashboard extends Component {
   state = {
     orders: [],
     filterBy: null,
+    pageCount: 0,
     pageSize: 4,
     currentPage: 1,
   }
@@ -23,25 +25,20 @@ class OrderDashboard extends Component {
   ]
 
   async componentDidMount() {
+    // get the orders from the DB
     let { data: orders } = await getOrders()
-    orders = this.mapDataToProps(orders)
-    this.setState({ orders })
+
+    // map the data to the apps props
+    orders = mapDataToProps(orders)
+
+    // get the page count
+    const pageCount = Math.ceil(orders.length / this.state.pageSize)
+
+    this.setState({ orders, pageCount })
   }
 
-  mapDataToProps = (orders) => {
-    return orders.map((order) => {
-      return {
-        _id: order._id,
-        brand: order.Brand,
-        model: order.Product_name,
-        thumbnail: order.Product_img,
-        category: order.Category,
-        size: order.Size,
-        colour: order.Colour,
-        status: order.Status,
-        customer_initials: order.Customer_initials,
-      }
-    })
+  componentDidUpdate() {
+    this.autoRotateNextPage()
   }
 
   onFilterSelect = (filterBy) => {
@@ -71,6 +68,20 @@ class OrderDashboard extends Component {
     return { totalCount: filtered.length, data: orders }
   }
 
+  autoRotateNextPage = () => {
+    const { currentPage, pageCount } = this.state
+
+    clearTimeout(this.rotateTimeout)
+
+    if (pageCount <= 1 || pageCount === undefined) return
+
+    const nextPage = currentPage === pageCount ? 1 : currentPage + 1
+
+    this.rotateTimeout = setTimeout(() => {
+      this.setState({ currentPage: nextPage })
+    }, 10000)
+  }
+
   render() {
     const { currentPage, pageSize, filterBy } = this.state
     const { totalCount, data: orders } = this.getPagedData()
@@ -83,7 +94,9 @@ class OrderDashboard extends Component {
           onFilterSelect={this.onFilterSelect}
         />
 
-        <OrderResults orders={orders} />
+        <div className='results-container'>
+          <OrderResults orders={orders} />
+        </div>
 
         <Pagination
           itemsCount={totalCount}
