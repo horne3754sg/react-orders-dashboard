@@ -7,24 +7,6 @@ import { getOrders } from '../services/orderService'
 
 import './OrdersDashboard.scss'
 
-/*
-const orderItems = [...Array(20).keys()].map((_id) => {
-  return {
-    _id,
-    brand: 'Nike Air',
-    model: `VaporMax 201${_id + 1}`,
-    thumbnail: '/images/nike-blaze.png',
-    category: 'Men',
-    size: 'UK 9',
-    colour: 'Blue',
-    status: ['READY', 'ONWAY', 'INQUEUE', 'NOSTOCK'][
-      Math.floor(Math.random() * 4) // random status
-    ],
-    customers_initials: 'JD',
-  }
-})
-*/
-
 class OrderDashboard extends Component {
   state = {
     orders: [],
@@ -81,7 +63,7 @@ class OrderDashboard extends Component {
     if (filterBy !== null)
       filtered = allOrders.filter((order) => order.status === filterBy)
 
-    // Note: if you need to order the result, do it here
+    // Note: if you need to order the results, do it here
 
     // finally we will paginate the data here
     const orders = paginate(filtered, currentPage, pageSize)

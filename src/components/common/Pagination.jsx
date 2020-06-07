@@ -21,7 +21,7 @@ const Pagination = ({ itemsCount, currentPage, pageSize, onPageSelect }) => {
           return (
             <span
               key={page}
-              className={currentPage === page && 'active'}
+              className={currentPage === page ? 'active' : ''}
               onClick={() => onPageSelect(page)}></span>
           )
         })}
