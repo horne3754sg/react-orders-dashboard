@@ -77,16 +77,13 @@ class OrderDashboard extends Component {
 
     return (
       <div className='orders-dashboard'>
-        <div className='filters-container'>
-          <OrderFilters
-            filters={this.filters}
-            activeFilter={filterBy}
-            onFilterSelect={this.onFilterSelect}
-          />
-        </div>
-        <div className='results-container'>
-          <OrderResults orders={orders} />
-        </div>
+        <OrderFilters
+          filters={this.filters}
+          activeFilter={filterBy}
+          onFilterSelect={this.onFilterSelect}
+        />
+
+        <OrderResults orders={orders} />
 
         <Pagination
           itemsCount={totalCount}
