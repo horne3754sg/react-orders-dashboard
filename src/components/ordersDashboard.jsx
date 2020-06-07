@@ -8,6 +8,7 @@ import { mapDataToProps } from '../utils/utils'
 
 import './OrdersDashboard.scss'
 
+// TODO - need to refactor so that the filters update paged state props
 class OrderDashboard extends Component {
   state = {
     orders: [],
