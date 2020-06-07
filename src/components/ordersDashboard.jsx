@@ -3,6 +3,7 @@ import OrderFilters from './OrderFilters'
 import OrderResults from './OrderResults'
 import Pagination from './common/Pagination'
 import { paginate } from '../utils/paginate'
+import { getOrders } from '../services/orderService'
 
 import './OrdersDashboard.scss'
 
@@ -37,8 +38,26 @@ class OrderDashboard extends Component {
     { status: 'NOSTOCK', label: 'Out of stock' },
   ]
 
-  componentDidMount() {
-    this.setState({ orders: orderItems })
+  async componentDidMount() {
+    let { data: orders } = await getOrders()
+    orders = this.mapDataToProps(orders)
+    this.setState({ orders })
+  }
+
+  mapDataToProps = (orders) => {
+    return orders.map((order) => {
+      return {
+        _id: order._id,
+        brand: order.Brand,
+        model: order.Product_name,
+        thumbnail: order.Product_img,
+        category: order.Category,
+        size: order.Size,
+        colour: order.Colour,
+        status: order.Status,
+        customer_initials: order.Customer_initials,
+      }
+    })
   }
 
   onFilterSelect = (filterBy) => {

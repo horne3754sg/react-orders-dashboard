@@ -25,7 +25,7 @@ const Order = ({ data: order }) => {
         <strong>{order.colour}</strong>
       </div>
       <div className='col-900-1-24 customer-initials'>
-        <span>{order.customers_initials}</span>
+        <span>{order.customer_initials}</span>
       </div>
     </div>
   )
