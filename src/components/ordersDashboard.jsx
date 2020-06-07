@@ -47,6 +47,10 @@ class OrderDashboard extends Component {
     this.setState({ filterBy })
   }
 
+  onPageSelect = (pageNumber) => {
+    this.setState({ currentPage: pageNumber })
+  }
+
   getPagedData = () => {
     const { orders: allOrders, filterBy, currentPage, pageSize } = this.state
 
@@ -85,6 +89,7 @@ class OrderDashboard extends Component {
           itemsCount={totalCount}
           currentPage={currentPage}
           pageSize={pageSize}
+          onPageSelect={this.onPageSelect}
         />
       </div>
     )

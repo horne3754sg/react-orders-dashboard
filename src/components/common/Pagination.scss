@@ -13,6 +13,14 @@ $bullet-size: 5px;
     margin: 0 4px;
     background: #fff;
     border-radius: $bullet-size;
+
+    &.active {
+      background: #5abba3;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

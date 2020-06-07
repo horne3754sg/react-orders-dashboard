@@ -3,7 +3,7 @@ import { leadingZero } from './../../utils/utils'
 
 import './Pagination.scss'
 
-const Pagination = ({ itemsCount, currentPage, pageSize }) => {
+const Pagination = ({ itemsCount, currentPage, pageSize, onPageSelect }) => {
   // hom many pages do we have?
   const pagesCount = Math.ceil(itemsCount / pageSize)
 
@@ -12,13 +12,18 @@ const Pagination = ({ itemsCount, currentPage, pageSize }) => {
 
   // create a pages array with the first key as 1
   const pages = [...Array(pagesCount).keys()].map((k) => k + 1)
-  const totalPages = pages.length + 1
+  const totalPages = pages.length
 
   return (
     <div className='pagination-container'>
       <div className='pagination-dots'>
         {pages.map((page) => {
-          return <span key={page}></span>
+          return (
+            <span
+              key={page}
+              className={currentPage === page && 'active'}
+              onClick={() => onPageSelect(page)}></span>
+          )
         })}
       </div>
       <div className='pagination-pages'>
