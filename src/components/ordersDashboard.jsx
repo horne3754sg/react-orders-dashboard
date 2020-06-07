@@ -42,6 +42,8 @@ class OrderDashboard extends Component {
   }
 
   onFilterSelect = (filterBy) => {
+    // if the filter is already selected, unset it
+    if (this.state.filterBy === filterBy) filterBy = null
     this.setState({ filterBy })
   }
 
@@ -63,7 +65,7 @@ class OrderDashboard extends Component {
   }
 
   render() {
-    const { currentPage, pageSize } = this.state
+    const { currentPage, pageSize, filterBy } = this.state
     const { totalCount, data: orders } = this.getPagedData()
 
     return (
@@ -71,6 +73,7 @@ class OrderDashboard extends Component {
         <div className='filters-container'>
           <OrderFilters
             filters={this.filters}
+            activeFilter={filterBy}
             onFilterSelect={this.onFilterSelect}
           />
         </div>

@@ -2,17 +2,24 @@ import React from 'react'
 
 import './OrderFilters.scss'
 
-const OrderFilters = ({ filters, onFilterSelect }) => {
+const OrderFilters = ({ filters, onFilterSelect, activeFilter }) => {
   return (
     <ul className='order-filters'>
       {filters.map((filter) => {
         const { status, label } = filter
+
+        let classes = `filter-${status.toLowerCase()}`
+        if (activeFilter === status) classes += ' active'
+
         return (
           <li
             key={status}
-            className={`filter-${status.toLowerCase()}`}
+            className={classes}
             onClick={() => onFilterSelect(status)}>
-            {label}
+            <span className='bullet'>
+              <span></span>
+            </span>
+            <span>{label}</span>
           </li>
         )
       })}
