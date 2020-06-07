@@ -44,7 +44,7 @@ class OrderDashboard extends Component {
   onFilterSelect = (filterBy) => {
     // if the filter is already selected, unset it
     if (this.state.filterBy === filterBy) filterBy = null
-    this.setState({ filterBy })
+    this.setState({ filterBy, currentPage: 1 })
   }
 
   onPageSelect = (pageNumber) => {
