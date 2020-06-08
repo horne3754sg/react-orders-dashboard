@@ -7,7 +7,7 @@ class OrderResults extends Component {
       <div className='results-group'>
         {this.props.orders.length === 0 && (
           <div className='empty-results'>
-            <span> No orders</span>
+            <span> No orders at this time :-(</span>
           </div>
         )}
         {this.props.orders.map((order) => (
