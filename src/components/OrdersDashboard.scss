@@ -2,6 +2,9 @@
 
 .orders-dashboard {
   .results-container {
+    .empty-results {
+      text-align: center;
+    }
     .order-item {
       position: relative;
       align-items: center;
