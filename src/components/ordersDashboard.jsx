@@ -24,7 +24,19 @@ class OrderDashboard extends Component {
     { status: 'NOSTOCK', label: 'Out of stock' },
   ]
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.updateOrders()
+  }
+
+  componentDidUpdate() {
+    this.autoRotateNextPage()
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.rotateTimeout)
+  }
+
+  updateOrders = async () => {
     // get the orders from the DB
     const { data } = await getOrders()
 
@@ -35,14 +47,6 @@ class OrderDashboard extends Component {
     const pageCount = Math.ceil(orders.length / this.state.pageSize)
 
     this.setState({ orders, pageCount })
-  }
-
-  componentDidUpdate() {
-    this.autoRotateNextPage()
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.rotateTimeout)
   }
 
   onFilterSelect = (filterBy) => {
@@ -64,20 +68,6 @@ class OrderDashboard extends Component {
 
   onPageSelect = (pageNumber) => {
     this.setState({ currentPage: pageNumber })
-  }
-
-  autoRotateNextPage = () => {
-    const { currentPage, pageCount } = this.state
-
-    clearTimeout(this.rotateTimeout)
-
-    if (pageCount <= 1 || pageCount === undefined) return
-
-    const nextPage = currentPage === pageCount ? 1 : currentPage + 1
-
-    this.rotateTimeout = setTimeout(() => {
-      this.setState({ currentPage: nextPage })
-    }, 10000)
   }
 
   render() {
@@ -109,6 +99,21 @@ class OrderDashboard extends Component {
         />
       </div>
     )
+  }
+
+  autoRotateNextPage = () => {
+    const { currentPage, pageCount } = this.state
+
+    clearTimeout(this.rotateTimeout)
+
+    if (pageCount <= 1 || pageCount === undefined) return
+
+    const nextPage = currentPage === pageCount ? 1 : currentPage + 1
+
+    this.rotateTimeout = setTimeout(() => {
+      this.updateOrders()
+      this.setState({ currentPage: nextPage })
+    }, 10000)
   }
 }
 
