@@ -8,7 +8,6 @@ import { mapDataToProps } from '../utils/utils'
 
 import './OrdersDashboard.scss'
 
-// TODO - need to refactor so that the filters update paged state props
 class OrderDashboard extends Component {
   state = {
     orders: [],
@@ -18,6 +17,7 @@ class OrderDashboard extends Component {
     currentPage: 1,
   }
 
+  // This could be stored in the DB and then referenced as a schema type in mongoose
   filters = [
     { status: 'READY', label: 'Ready to try' },
     { status: 'ONWAY', label: 'On the way' },
@@ -27,10 +27,10 @@ class OrderDashboard extends Component {
 
   async componentDidMount() {
     // get the orders from the DB
-    let { data: orders } = await getOrders()
+    const { data } = await getOrders()
 
     // map the data to the apps props
-    orders = mapDataToProps(orders)
+    const orders = mapDataToProps(data)
 
     // get the page count
     const pageCount = Math.ceil(orders.length / this.state.pageSize)
@@ -42,10 +42,31 @@ class OrderDashboard extends Component {
     this.autoRotateNextPage()
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.rotateTimeout)
+  }
+
+  filterResults = (orders, filterBy) => {
+    if (filterBy !== null)
+      orders = orders.filter((order) => order.status === filterBy)
+    return orders
+  }
+
   onFilterSelect = (filterBy) => {
+    const { filterBy: currentFilterBy, orders: allOrders } = this.state
+    // When a filter is selected, we have two possible options:
+    // 1. Filter the existing data which would be periodically updated from the DB
+    // 2. Request new data each time a filter is toggled using a query param {status: filterBy}
+
     // if the filter is already selected, unset it
-    if (this.state.filterBy === filterBy) filterBy = null
-    this.setState({ filterBy, currentPage: 1 })
+    if (currentFilterBy === filterBy) filterBy = null
+
+    let orders = this.filterResults(allOrders, filterBy)
+
+    // update page count
+    const pageCount = Math.ceil(orders.length / this.state.pageSize)
+
+    this.setState({ filterBy, currentPage: 1, pageCount })
   }
 
   onPageSelect = (pageNumber) => {
@@ -55,11 +76,8 @@ class OrderDashboard extends Component {
   getPagedData = () => {
     const { orders: allOrders, filterBy, currentPage, pageSize } = this.state
 
-    let filtered = allOrders
-
     // any filtering that needs to be done should be done here first
-    if (filterBy !== null)
-      filtered = allOrders.filter((order) => order.status === filterBy)
+    let filtered = this.filterResults(allOrders, filterBy)
 
     // Note: if you need to order the results, do it here
 
