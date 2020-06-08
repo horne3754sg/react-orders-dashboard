@@ -1,5 +1,7 @@
 run `yarn` in the project root to install NPM packages
 
+The API can be found [https://github.com/horne3754sg/orders-dashboard-api](here) and you can populate a database with some sample data.
+
 ## Available Scripts
 
 In the project directory, you can run:
