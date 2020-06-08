@@ -8,4 +8,4 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-Start the app and opens at [http://localhost:3000](http://localhost:3000)
+Starts the app and opens at [http://localhost:3000](http://localhost:3000)
